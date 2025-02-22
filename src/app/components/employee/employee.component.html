@@ -1,0 +1,52 @@
+<mat-card>
+    <mat-card-header>
+        <!-- <h2>Employee Listing</h2> -->
+        <button mat-raised-button color="primary" (click)="addEmployee()">Add New</button>
+    </mat-card-header>
+
+
+    <mat-card-content>
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef> Employee ID </th>
+                <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+            </ng-container>
+
+            <!-- Employee Column -->
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef> Name </th>
+                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+            </ng-container>
+
+            <!-- Employee Salary Column -->
+            <ng-container matColumnDef="salary">
+                <th mat-header-cell *matHeaderCellDef> Salary </th>
+                <td mat-cell *matCellDef="let element"> {{element.salary | currency}} </td>
+            </ng-container>
+
+            <!-- Employee DOJ Column -->
+            <ng-container matColumnDef="doj">
+                <th mat-header-cell *matHeaderCellDef> Date Of Joining </th>
+                <td mat-cell *matCellDef="let element"> {{element.doj | date}} </td>
+            </ng-container>
+
+            <!-- Employee Role Column -->
+            <ng-container matColumnDef="role">
+                <th mat-header-cell *matHeaderCellDef> Role </th>
+                <td mat-cell *matCellDef="let element"> {{element.role}} </td>
+            </ng-container>
+
+            <!-- Employee Action -->
+            <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef> Action </th>
+                <td mat-cell *matCellDef="let element">
+                    <button mat-raised-button color="primary" (click)="editEmployee(element.id)">Edit</button>
+                    <button mat-raised-button color="accent" (click)="deleteEmployee(element.id)">Delete</button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef=" displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </mat-card-content>
+</mat-card>

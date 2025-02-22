@@ -1,0 +1,18 @@
+{
+  "employee": [
+    {
+      "id": "1",
+      "name": "Varun",
+      "doj": "2025-02-04T18:30:00.000Z",
+      "role": "manager",
+      "salary": 50000
+    },
+    {
+      "id": "3",
+      "name": "Tharun",
+      "doj": "2025-02-26T18:30:00.000Z",
+      "role": "lead",
+      "salary": 150000
+    }
+  ]
+}

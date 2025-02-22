@@ -1,0 +1,33 @@
+create app using ng new command
+
+install required packages
+1. ng add @angular/material
+2. npm i ngx-toastr
+3. ng add @ngrx/store
+4. ng add @ngrx/effects
+5. ng add @ngrx/store-devtools
+6. npm install -g json-server
+
+create 2 components 
+1.employee
+2. addEmployee
+
+and give routing paths in app.routes.ts
+
+create services
+1. employee
+
+create model folder
+1. Employee.ts and give interface for employee
+
+
+for json server create data folder
+and create db.json and run json server cmnd -> json-server --watch src/app/data/db.json
+
+//design part
+1. Employee component and add-employee component
+
+//service side
+in app.config we need to include in app.config.ts in providers array -> providehttpclient()
+
+
