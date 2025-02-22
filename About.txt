@@ -35,3 +35,11 @@ and create db.json and run json server cmnd -> json-server --watch src/app/data/
 in app.config we need to include in app.config.ts in providers array -> providehttpclient()
 
 
+
+
+======running the application====
+
+in 1 terminal run->  ng serve
+in 2nd terminal run-> json-server --watch src/app/data/db.json
+
+NOTE: make sure to install node modules 
