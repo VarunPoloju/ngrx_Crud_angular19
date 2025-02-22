@@ -1,3 +1,7 @@
+(master) branch HAS CRUD OPERATIONS WITHOUT NGRX
+(Feature/feb_22) branch has CRUD operations using ngrx
+===========================================
+
 create app using ng new command
 
 install required packages
