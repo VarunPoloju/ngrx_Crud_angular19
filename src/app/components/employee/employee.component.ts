@@ -5,9 +5,11 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table'
 import { MatDialog, MatDialogModule } from '@angular/material/dialog'
 import { AddEmployeeComponent } from '../add-employee/add-employee.component';
 import { Employee } from '../../model/Employee';
-import { EmployeeService } from '../../services/employee.service';
 import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { Store } from '@ngrx/store';
+import { deleteEmployee, loadEmployee } from '../../Store/Employee.action';
+import { getEmpList } from '../../Store/Employee.selector';
 
 @Component({
   selector: 'app-employee',
@@ -21,7 +23,7 @@ export class EmployeeComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['id', 'name', 'role', 'doj', 'salary', 'action'];
   subsciption = new Subscription();
 
-  constructor(private dialog: MatDialog, private empservice: EmployeeService) {
+  constructor(private store: Store, private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -30,11 +32,11 @@ export class EmployeeComponent implements OnInit, OnDestroy {
 
 
   getAllEmployees() {
-    let sub = this.empservice.getAll().subscribe(item => {
+    this.store.dispatch(loadEmployee())
+    this.store.select(getEmpList).subscribe(item => {
       this.empList = item;
       this.dataSource = new MatTableDataSource(this.empList)
-    });
-    this.subsciption.add(sub);
+    })
   }
 
   addEmployee() {
@@ -47,10 +49,7 @@ export class EmployeeComponent implements OnInit, OnDestroy {
 
   deleteEmployee(empId: number) {
     if (confirm('Are you sure?')) {
-      let sub = this.empservice.delete(empId).subscribe(data => {
-        this.getAllEmployees();
-      });
-      this.subsciption.add(sub);
+      this.store.dispatch(deleteEmployee({empId : empId}))
     }
   }
 

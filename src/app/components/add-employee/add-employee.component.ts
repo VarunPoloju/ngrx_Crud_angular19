@@ -10,8 +10,10 @@ import { MatIconModule } from '@angular/material/icon'
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { Employee } from '../../model/Employee';
-import { EmployeeService } from '../../services/employee.service';
 import { ToastrService } from 'ngx-toastr';
+import { Store } from '@ngrx/store';
+import { addEmployee, getEmployee, updateEmployee } from '../../Store/Employee.action';
+import { selectEmployee } from '../../Store/Employee.selector';
 
 @Component({
   selector: 'app-add-employee',
@@ -26,7 +28,7 @@ export class AddEmployeeComponent implements OnInit {
   dialogData: any;
   isEdit = false
 
-  constructor(private empservice: EmployeeService, private dialog: MatDialogRef<AddEmployeeComponent>,
+  constructor(private store: Store, private dialog: MatDialogRef<AddEmployeeComponent>,
     private toastr: ToastrService, @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
 
@@ -44,8 +46,9 @@ export class AddEmployeeComponent implements OnInit {
     this.dialogData = this.data;
     if (this.dialogData.code > 0) {
       this.title = 'Edit Employee';
-      this.isEdit = true
-      this.empservice.getById(this.dialogData.code).subscribe(item => {
+      this.isEdit = true;
+      this.store.dispatch(getEmployee({ empId: this.dialogData.code }));
+      this.store.select(selectEmployee).subscribe(item => {
         let _data = item;
         if (_data != null) {
           this.empForm.setValue({
@@ -56,37 +59,31 @@ export class AddEmployeeComponent implements OnInit {
             salary: _data.salary
           })
         }
-      })
+      }) 
+  }
+}
+saveEmployee() {
+  if (this.empForm.valid) {
+    let _data: Employee = {
+      id: Number(this.empForm.value.id),
+      name: this.empForm.value.name as string,
+      doj: new Date(this.empForm.value.doj as Date),
+      role: this.empForm.value.role as string,
+      salary: Number(this.empForm.value.salary)
     }
-  }
-  saveEmployee() {
-    if (this.empForm.valid) {
-      let _data: Employee = {
-        id: Number(this.empForm.value.id),
-        name: this.empForm.value.name as string,
-        doj: new Date(this.empForm.value.doj as Date),
-        role: this.empForm.value.role as string,
-        salary: Number(this.empForm.value.salary)
-      }
 
-      if (this.isEdit) {
-        this.empservice.update(_data).subscribe(item => {
-          this.toastr.success('Saved Successfull', 'Updated')
-          this.closePopUp();
-        })
-      }
-      else {
-        this.empservice.create(_data).subscribe(item => {
-          this.toastr.success('Saved Successfull', 'Created')
-          this.closePopUp();
-        })
-      }
-
+    if (!this.isEdit) {
+      this.store.dispatch(addEmployee({ data: _data }))
     }
+    else {
+      this.store.dispatch(updateEmployee({ data: _data }))
+    }
+    this.closePopUp();
   }
+}
 
 
-  closePopUp() {
-    this.dialog.close();
-  }
+closePopUp() {
+  this.dialog.close();
+}
 }

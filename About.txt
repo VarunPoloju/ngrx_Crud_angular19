@@ -40,3 +40,11 @@ in 1 terminal run->  ng serve
 in 2nd terminal run-> json-server --watch src/app/data/db.json
 
 NOTE: make sure to install node modules 
+
+
+===========================================NGRX===============================
+
+store - for storing data like emp data
+action - we can define actions with uniq name, and also we can pass data as parameters
+reducer - based on actions, it will modify the values in the store.(executing the action)
+effects -  will andle the http request

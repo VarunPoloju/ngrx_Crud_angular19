@@ -4,15 +4,15 @@
       "id": "1",
       "name": "Varun",
       "doj": "2025-02-04T18:30:00.000Z",
-      "role": "manager",
-      "salary": 50000
+      "role": "lead",
+      "salary": 550000
     },
     {
-      "id": "3",
+      "id": "2",
       "name": "Tharun",
-      "doj": "2025-02-26T18:30:00.000Z",
-      "role": "lead",
-      "salary": 150000
+      "doj": "2025-02-20T18:30:00.000Z",
+      "role": "operator",
+      "salary": 41604
     }
   ]
 }
